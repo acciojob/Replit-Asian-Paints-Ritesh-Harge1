@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grid Color Changer</title>
   <style>
-    /* Step 2: Basic styling for grid */
+    /* Grid container styling */
     #grid-container {
       display: grid;
       grid-template-columns: repeat(3, 100px);
@@ -14,6 +14,7 @@
       margin-bottom: 20px;
     }
 
+    /* Grid item styling */
     .grid-item {
       display: flex;
       justify-content: center;
@@ -24,7 +25,7 @@
       transition: background-color 0.3s;
     }
 
-    /* Optional: Style for inputs and buttons */
+    /* Inputs and buttons styling */
     input, button {
       margin: 5px;
       padding: 5px;
@@ -34,8 +35,8 @@
 </head>
 <body>
 
-  <div id="grid-container">
-    <!-- 3x3 grid items with ids 1 to 9 -->
+  <!-- Grid container with class for Cypress test -->
+  <div id="grid-container" class="grid-container">
     <div class="grid-item" id="1">1</div>
     <div class="grid-item" id="2">2</div>
     <div class="grid-item" id="3">3</div>
@@ -47,13 +48,43 @@
     <div class="grid-item" id="9">9</div>
   </div>
 
-  <!-- Inputs and buttons -->
+  <!-- Inputs for block ID and color -->
   <input type="number" id="block_id" placeholder="Enter Block ID (1-9)" min="1" max="9">
   <input type="text" id="colour_id" placeholder="Enter Color (e.g., red, #ff0000)">
-  <button id="change_button">Change Color</button>
-  <button id="Reset">Reset</button>
 
-  <script src="script.js"></script>
+  <!-- Buttons with exact IDs and text for Cypress -->
+  <button id="change_button">Change</button>
+  <button id="reset_button">Reset</button>
+
+  <!-- JavaScript functionality -->
+  <script>
+    const changeButton = document.getElementById('change_button');
+    const resetButton = document.getElementById('reset_button');
+
+    changeButton.addEventListener('click', () => {
+      const blockId = document.getElementById('block_id').value;
+      const colour = document.getElementById('colour_id').value;
+
+      // Reset all grid items to transparent
+      for (let i = 1; i <= 9; i++) {
+        document.getElementById(i).style.backgroundColor = 'transparent';
+      }
+
+      // Change the selected block's color
+      if (blockId >= 1 && blockId <= 9) {
+        document.getElementById(blockId).style.backgroundColor = colour;
+      } else {
+        alert('Please enter a valid Block ID between 1 and 9');
+      }
+    });
+
+    // Reset button functionality
+    resetButton.addEventListener('click', () => {
+      for (let i = 1; i <= 9; i++) {
+        document.getElementById(i).style.backgroundColor = 'transparent';
+      }
+    });
+  </script>
+
 </body>
 </html>
-
